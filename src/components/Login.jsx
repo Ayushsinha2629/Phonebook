@@ -48,11 +48,11 @@ const Login = () => {
                 <div className='flex flex-col' >
                     <div>
                         <p className='mr-[203px]'>Email</p>
-                        <input value={email} onChange={(e) => setemail(e.target.value)} className='text-white bg-zinc-800 w-4/5 rounded-lg' type="text" name='email' />
+                        <input value={email} onChange={(e) => setemail(e.target.value)} className=' p-2 text-white bg-zinc-800 w-4/5 rounded-lg' type="text" name='email' />
                     </div>
                     <div>
                         <p className='mr-44'>Password</p>
-                        <input value={password} onChange={(e) => setpassword(e.target.value)} className='text-white bg-zinc-800 w-4/5 rounded-lg' type="password" name='password' />
+                        <input value={password} onChange={(e) => setpassword(e.target.value)} className=' p-2 text-white bg-zinc-800 w-4/5 rounded-lg' type="password" name='password' />
                     </div>
                 </div>
                 <div className='flex justify-center'>

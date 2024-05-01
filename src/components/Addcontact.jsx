@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const AddContact = () => {
+const AddContact = ({ isOpen, onClose }) => {
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
   const userId = localStorage.getItem('userId');
+  const [isEntering, setIsEntering] = useState(true);
   const Navigate = useNavigate();
 
   const handleClick = async () => {
@@ -33,18 +34,37 @@ const AddContact = () => {
       console.error('Error while saving data:', error.message);
     }
     Navigate('/contactlist');
+    onClose();
   };
+  const closeModal = () => {
+    setIsEntering(false); 
+    setTimeout(() => {
+        onClose(); 
+    }, 300); 
+};
 
   return (
-    <div>
-      <nav className='w-full flex justify-between m-16'>
-        <span>PB</span>
-        <button onClick={() => navigate('/')} className='flex border-2 border-white gap-5 items-center px-6 py-2 bg-zinc-900'>
-          LOGOUT
-        </button>
-      </nav>
+    <div className={`fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 transition-transform ${isOpen ? 'transform translate-y-0' : 'transform -translate-y-full'}`}>
       <div>
-        <div className='mx-auto border-2 border-white w-[37vw] text-left font-semibold text-xl pl-6 py-3 bg-zinc-900'>Add Contact</div>
+      <div className="p-4 border-2 border-white bg-zinc-900 flex justify-between">
+                    <h2 className="text-lg font-semibold">Add Contact</h2>
+                    <button onClick={closeModal} className="focus:outline-none">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-6 w-6 text-gray-500 hover:text-gray-700"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M6 18L18 6M6 6l12 12"
+                            />
+                        </svg>
+                    </button>
+                </div>
         <div className='flex flex-wrap gap-10 mx-auto w-[37vw] text-left border-2 border-white p-6 bg-zinc-900'>
           <div className='flex flex-col'>
             <span className='pl-1'>Name*</span>

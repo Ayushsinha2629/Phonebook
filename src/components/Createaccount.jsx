@@ -27,7 +27,14 @@ const Createaccount = () => {
           result = await result.json();
           console.warn("result", result);
           localStorage.setItem("user_info",JSON.stringify(result));
-          Navigate("/newaddcontact")
+          if (result.error) {
+            console.error("Authentication error:", result.error.message);
+            // Handle authentication error (e.g., display a message to the user)
+        } else {
+            console.log("Authentication successful");
+            localStorage.setItem("user_info", JSON.stringify(result));
+            Navigate("/newaddcontact");
+        }
         
     };
     return (
@@ -37,19 +44,19 @@ const Createaccount = () => {
                 <div className='flex flex-col' >
                     <div>
                         <p className='w-[104px]'>Name</p>
-                        <input value={name} onChange={(e) => setname(e.target.value)} className='text-white bg-zinc-800 w-4/5 rounded-lg' type="text" name='email' />
+                        <input value={name} onChange={(e) => setname(e.target.value)} className=' p-2 text-white bg-zinc-800 w-4/5 rounded-lg' type="text" name='email' />
                     </div>
                     <div>
                         <p className='mr-[203px]'>Email</p>
-                        <input value={email} onChange={(e) => setEmail(e.target.value)} className='text-white bg-zinc-800 w-4/5 rounded-lg' type="text" name='email' />
+                        <input value={email} onChange={(e) => setEmail(e.target.value)} className=' p-2 text-white bg-zinc-800 w-4/5 rounded-lg' type="text" name='email' />
                     </div>
                     <div>
                         <p className='mr-44'>Password</p>
-                        <input value={password} onChange={(e) => setPassword(e.target.value)} className='text-white bg-zinc-800 w-4/5 rounded-lg' type="text" name='password' />
+                        <input value={password} onChange={(e) => setPassword(e.target.value)} className=' p-2 text-white bg-zinc-800 w-4/5 rounded-lg' type="text" name='password' />
                     </div>
                     <div>
                         <p className='w-[187px]'>Confirm Password</p>
-                        <input value={confirmpassword} onChange={(e) => setconfirmpassword(e.target.value)} className='text-white bg-zinc-800 w-4/5 rounded-lg' type="text" name='password' />
+                        <input value={confirmpassword} onChange={(e) => setconfirmpassword(e.target.value)} className=' p-2 text-white bg-zinc-800 w-4/5 rounded-lg' type="text" name='password' />
                     </div>
                 </div>
                 <div className='flex justify-center'>

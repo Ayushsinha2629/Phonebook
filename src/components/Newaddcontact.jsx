@@ -15,7 +15,7 @@ const Newaddcontact = () => {
         </nav>
     <div>
       <div className="circle h-20 w-20 border-2 border-white rounded-full mx-auto bg-zinc-900 mt-36">
-      <div className='flex justify-center items-center'><svg width="70" height="76" viewBox="0 0 100 100 ">
+      <div onClick={()=> Navigate("/addcontact")} className='flex justify-center items-center'><svg width="70" height="76" viewBox="0 0 100 100 ">
                     <line x1="50" y1="10" x2="50" y2="90" stroke="white" stroke-width="3" />
                     <line x1="10" y1="50" x2="90" y2="50" stroke="white" stroke-width="3" /></svg>
                     </div>
