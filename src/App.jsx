@@ -5,6 +5,7 @@ import Contactlist from './components/Contactlist'
 import Createaccount from './components/Createaccount'
 import Addcontact from './components/Addcontact'
 import Newaddcontact from './components/Newaddcontact'
+import Contactdetails from './components/Contactdetails'
 
 function App() {
 
@@ -16,10 +17,8 @@ function App() {
         <Route path = "/createaccount" element = {<Createaccount/>}/>
         <Route path = "/addcontact" element = {<Addcontact/>}/>
         <Route path = "/newaddcontact" element = {<Newaddcontact/>}/>
+        <Route path = "/contact/:contactId" element = {<Contactdetails/>}/>
       </Routes>
-      {/* <Contactlist/>
-      <Createaccount/>
-      <Addcontact/> */}
     </div>
   )
 }
