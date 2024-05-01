@@ -22,8 +22,8 @@ const ContactDetails = () => {
         }
 
         const data = await response.json();
-        console.log('Fetched data:', data)
-        setContact(data);
+        console.log('Fetched data:', data[0])
+        setContact(data[0]);
       } catch (error) {
         console.error('Error while fetching contact details:', error.message);
       }
@@ -39,12 +39,16 @@ const ContactDetails = () => {
 
   return (
     <div>
-      <h2>Contact Details</h2>
-      <p>Name: {contact.name}</p>
-      <p>Phone Number: {contact.phone_number}</p>
-      <p>Address: {contact.address}</p>
-    </div>
-  );
+    <h2>Contact Details</h2>
+    {contact && (
+      <div>
+        <p>Name: {contact.name}</p>
+        <p>Phone Number: {contact.phone_number}</p>
+        <p>Address: {contact.address}</p>
+      </div>
+    )}
+  </div>
+);
 };
 
 export default ContactDetails;
