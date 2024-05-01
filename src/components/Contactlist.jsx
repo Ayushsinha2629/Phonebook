@@ -1,13 +1,39 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 const Contactlist = () => {
-    const Navigate = useNavigate()
 
-    const handleClick = () => {
-      localStorage.clear();
-      Navigate("/")
-    }
+    const [contacts, setContacts] = useState([]);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await fetch('https://mfpwxvanolojwoflxwvo.supabase.co/rest/v1/contacts', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': '*/*',
+              'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1mcHd4dmFub2xvandvZmx4d3ZvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTM4NDU2MTIsImV4cCI6MjAyOTQyMTYxMn0.zVmujhftittETdWgoTdqqYIydFA46M0uMFWgYcjHBHs'
+            },
+          });
+  
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+  
+          const data = await response.json();
+          setContacts(data);
+
+        } catch (error) {
+          console.error('Error while fetching data:', error.message);
+        }
+      };
+  
+      fetchData();
+    }, []);
+  
+    const Navigate = useNavigate()
     
     return (
         <>
@@ -15,7 +41,7 @@ const Contactlist = () => {
             <span>
                 PB
             </span>
-            <button onClick={(handleClick)} className='flex border-2 border-white gap-5 items-center px-6 py-2 bg-zinc-900'>LOGOUT</button>
+            <button onClick={()=> Navigate("/")} className='flex border-2 border-white gap-5 items-center px-6 py-2 bg-zinc-900'>LOGOUT</button>
 
         </nav>
         <div className='flex justify-center'>
@@ -29,13 +55,13 @@ const Contactlist = () => {
         </div>
         <div className='flex justify-center mt-6'>
         <div className='flex flex-col border-2 border-white gap-5 w-[30vw] py-2 bg-zinc-900 text-left p-4 max-h-64 overflow-y-scroll'>
-         <span>john doe </span>
-         <span>john doe </span>
-         <span>john doe </span>
-         <span>john doe </span>
-         <span>john doe </span>
-         <span>john doe </span>
-         <span>john doe </span>
+         <ul>
+            {contacts.map((contact) => (
+                <li  key={contact.id}>
+                    {contact.name}
+                </li>
+            ))}
+         </ul>
         </div>
         </div>
         </>
