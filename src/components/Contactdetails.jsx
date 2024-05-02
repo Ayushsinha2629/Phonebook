@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import {useNavigate, useParams } from 'react-router-dom';
 
-const ContactDetails = ({ isOpen, onClose }) => {
-    const { contactId } = useParams();
+const ContactDetails = ({ isOpen, onClose, contactId }) => {
+    // const { contactId } = useParams();
     const [contact, setContact] = useState();
     const [isEntering, setIsEntering] = useState(true);
+    let apikey = import.meta.env.VITE_APP_API_KEY
 
     const Navigate = useNavigate();
-
     useEffect(() => {
         const fetchContact = async () => {
             try {
@@ -16,9 +16,9 @@ const ContactDetails = ({ isOpen, onClose }) => {
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': '*/*',
-                        "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1mcHd4dmFub2xvandvZmx4d3ZvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTM4NDU2MTIsImV4cCI6MjAyOTQyMTYxMn0.zVmujhftittETdWgoTdqqYIydFA46M0uMFWgYcjHBHs"
+                        "apikey": apikey,
                     },
-                });
+                })
 
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -49,19 +49,23 @@ const ContactDetails = ({ isOpen, onClose }) => {
     return (
         <>
            <div className={`fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 transition-transform ${isOpen ? 'transform translate-y-0' : 'transform -translate-y-full'}`}>
-            <div className='flex flex-wrap gap-20 mx-auto w-[37vw] text-left border-2 border-white p-6 bg-zinc-900'>
+            <div className='flex flex-wrap gap-20 mx-auto w-[50vw] h-[60vh] text-left border-2 border-white p-10 bg-zinc-900 rounded-xl'>
                 <div className='flex flex-col pr-32'>
-                    <span className='pl-1'>Name*</span>
-                    <p className='p-1 text-xl'>{contact.name}</p>
+                    <span className='pl-1 text-xl'>Name*</span>
+                    <p className='p-1 text-2xl'>{contact.name}</p>
                 </div>
                 <div className='flex flex-col'>
-                    <span className='pl-1'>Phone Number*</span>
-                    <p className='p-1 text-xl'>{contact.phone_number}</p>
+                    <span className='pl-1 text-xl'>Phone Number*</span>
+                    <p className='p-1 text-2xl'>{contact.phone_number}</p>
                 </div>
                 <div className='flex flex-col'>
-                    <span>Address</span>
-                    <p className='p-0 text-xl w-[33vw]'>{contact.address}</p>
-                </div>
+    <span className='text-xl'>Address</span>
+    {contact.address ? (
+        <p className='p-0 text-2xl w-[43vw]'>{contact.address}</p>
+    ) : (
+        <p className='p-0 text-2xl w-[43vw]'>Address not found.</p>
+    )}
+</div>
                 <button onClick={handleClose} className='text-white bg-zinc-800 border-2 border-white mx-auto py-2 px-8 font-medium rounded-md'>
                     Close
                 </button>

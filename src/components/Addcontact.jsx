@@ -8,6 +8,8 @@ const AddContact = ({ isOpen, onClose }) => {
   const userId = localStorage.getItem('userId');
   const [isEntering, setIsEntering] = useState(true);
   const Navigate = useNavigate();
+  let apikey = import.meta.env.VITE_APP_API_KEY;
+
 
   const handleClick = async () => {
     try {
@@ -16,7 +18,7 @@ const AddContact = ({ isOpen, onClose }) => {
         headers: {
           'Content-Type': 'application/json',
           'Accept': '*/*',
-          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1mcHd4dmFub2xvandvZmx4d3ZvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTM4NDU2MTIsImV4cCI6MjAyOTQyMTYxMn0.zVmujhftittETdWgoTdqqYIydFA46M0uMFWgYcjHBHs'
+          "apikey": apikey,
         },
         body: JSON.stringify({ name, phone_number: phoneNumber, user_id: userId, address }),
       };
@@ -46,8 +48,8 @@ const AddContact = ({ isOpen, onClose }) => {
   return (
     <div className={`fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 transition-transform ${isOpen ? 'transform translate-y-0' : 'transform -translate-y-full'}`}>
       <div>
-      <div className="p-4 border-2 border-white bg-zinc-900 flex justify-between">
-                    <h2 className="text-lg font-semibold">Add Contact</h2>
+      <div className="p-4 border-2 border-white bg-zinc-900 flex justify-between ">
+                    <h2 className="text-2xl font-semibold">Add Contact</h2>
                     <button onClick={closeModal} className="focus:outline-none">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -65,18 +67,18 @@ const AddContact = ({ isOpen, onClose }) => {
                         </svg>
                     </button>
                 </div>
-        <div className='flex flex-wrap gap-10 mx-auto w-[37vw] text-left border-2 border-white p-6 bg-zinc-900'>
-          <div className='flex flex-col'>
-            <span className='pl-1'>Name*</span>
-            <input value={name} name='name' onChange={(e) => setName(e.target.value)} className='text-white bg-zinc-800 w-[15vw] rounded-md p-2' type='text' required />
+        <div className='flex flex-wrap gap-10 mx-auto w-[50vw] h-[60vh] text-left border-2 border-white p-6 bg-zinc-900 '>
+          <div className='flex flex-col mr-10'>
+            <span className='pl-1 text-xl'>Name*</span>
+            <input value={name} name='name' onChange={(e) => setName(e.target.value)} className='text-white bg-zinc-800 w-[20vw] rounded-md p-2' type='text' required />
           </div>
           <div className='flex flex-col'>
-            <span className='pl-1'>Phone Number*</span>
-            <input value={phoneNumber} name='phone_number' onChange={(e) => setPhoneNumber(e.target.value)} className='text-white bg-zinc-800 w-[15vw] rounded-md p-2' type='text' required />
+            <span className='pl-1 text-xl'>Phone Number*</span>
+            <input value={phoneNumber} name='phone_number' onChange={(e) => setPhoneNumber(e.target.value)} className='text-white bg-zinc-800 w-[20vw] rounded-md p-2' type='text' required />
           </div>
           <div className='flex flex-col'>
-            <span className='pl-1'>Address</span>
-            <textarea value={address} name='address' onChange={(e) => setAddress(e.target.value)} className='text-white bg-zinc-800 rounded-md w-[32.7vw] h-[5vw] p-2' type='text'></textarea>
+            <span className='pl-1 text-xl'>Address</span>
+            <textarea value={address} name='address' onChange={(e) => setAddress(e.target.value)} className='text-white bg-zinc-800 rounded-md w-[43.7vw] h-[5vw] p-2' type='text'></textarea>
           </div>
           <button onClick={handleClick} className='text-white bg-zinc-800 border-2 border-white mx-auto py-2 px-8 font-medium rounded-md'>
             Add

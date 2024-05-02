@@ -10,6 +10,7 @@ const Createaccount = () => {
     const [name, setname] = useState('');
     const [password, setPassword] = useState('');
     const [confirmpassword, setconfirmpassword] = useState('');
+    let apikey = import.meta.env.VITE_APP_API_KEY
 
     const handleClick = async () => {
         const item = { name, password, email }; 
@@ -20,7 +21,7 @@ const Createaccount = () => {
             headers: {
               "Content-Type": "application/json",
               "Accept": "*/*",
-              "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1mcHd4dmFub2xvandvZmx4d3ZvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTM4NDU2MTIsImV4cCI6MjAyOTQyMTYxMn0.zVmujhftittETdWgoTdqqYIydFA46M0uMFWgYcjHBHs"
+              "apikey": apikey,
             },
             body: JSON.stringify(item)
           });
@@ -39,9 +40,9 @@ const Createaccount = () => {
     };
     return (
         <div>
-            <div className='w-[20vw] bg-zinc-900 flex flex-col gap-5 border-2 border-white mx-auto mb-10 pb-6'>
+            <div className='w-[20vw] bg-zinc-900 flex flex-col gap-5 border-2 border-white mx-auto mb-10 pb-6 rounded-xl'>
                 <span className='font-bold text-2xl pt-10'>Sign Up</span>
-                <div className='flex flex-col' >
+                <div className='flex flex-col gap-3' >
                     <div>
                         <p className='w-[104px]'>Name</p>
                         <input value={name} onChange={(e) => setname(e.target.value)} className=' p-2 text-white bg-zinc-800 w-4/5 rounded-lg' type="text" name='email' />

@@ -10,7 +10,9 @@ const Login = () => {
   
     
     const Navigate = useNavigate()
-
+    let apikey = import.meta.env.VITE_APP_API_KEY
+    console.log(apikey)
+    
     const handleClick = async () => {
         const item = {password, email }; 
         console.warn(item);
@@ -20,7 +22,7 @@ const Login = () => {
             headers: {
               "Content-Type": "application/json",
               "Accept": "*/*",
-              "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1mcHd4dmFub2xvandvZmx4d3ZvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTM4NDU2MTIsImV4cCI6MjAyOTQyMTYxMn0.zVmujhftittETdWgoTdqqYIydFA46M0uMFWgYcjHBHs"
+              "apikey": apikey,
             },
             body: JSON.stringify(item)
           });
@@ -43,9 +45,9 @@ const Login = () => {
             <div className='pt-32 pb-10'>
                 <h1 className='font-bold text-3xl'>PHONE BOOK</h1>
             </div>
-            <div className='w-[20vw] bg-zinc-900 flex flex-col gap-5 border-2 border-white mx-auto mb-10 pb-6'>
+            <div className='w-[20vw] bg-zinc-900 flex flex-col gap-5 border-2 border-white mx-auto mb-10 pb-6 rounded-xl'>
                 <span className='font-bold text-2xl pt-10'>Log In</span>
-                <div className='flex flex-col' >
+                <div className='flex flex-col gap-2' >
                     <div>
                         <p className='mr-[203px]'>Email</p>
                         <input value={email} onChange={(e) => setemail(e.target.value)} className=' p-2 text-white bg-zinc-800 w-4/5 rounded-lg' type="text" name='email' />
