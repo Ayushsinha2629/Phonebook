@@ -1,18 +1,19 @@
-import React, { useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-import { useState } from 'react'
-import Addcontact from './Addcontact'
-import ContactDetails from './Contactdetails'
-const Contactlist = () => {
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import Addcontact from './Addcontact';
+import ContactDetails from './Contactdetails';
 
+const Contactlist = () => {
+    // State variables
     const [contacts, setContacts] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedContactId, setSelectedContactId] = useState(null);
     const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-    const Navigate = useNavigate()
-    let apikey = import.meta.env.VITE_APP_API_KEY;
+    const Navigate = useNavigate(); // Hook for navigation
+    let apikey = import.meta.env.VITE_APP_API_KEY; // API key
 
-
+    // Fetch contacts data on component mount
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -31,7 +32,6 @@ const Contactlist = () => {
 
                 const data = await response.json();
                 setContacts(data);
-
             } catch (error) {
                 console.error('Error while fetching data:', error.message);
             }
@@ -40,58 +40,68 @@ const Contactlist = () => {
         fetchData();
     }, []);
 
+    // Function to handle opening contact details modal
     const handleContactDetailsClick = (contactId) => {
         setIsContactModalOpen(true);
         setSelectedContactId(contactId);
     };
+
+    // Function to handle opening add contact modal
     const handleAddContactClick = () => {
         setIsModalOpen(true);
     };
+
+    // Function to close add contact modal
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
+
+    // Function to close contact details modal
     const handleCloseContactModal = () => {
         setIsContactModalOpen(false);
         setSelectedContactId(null);
     };
-return (
-    <>
-        <nav className='w-full flex justify-between m-16'>
-            <span className='text-3xl font-extrabold'>
-                PB
-            </span>
-            <button onClick={() => Navigate("/")} className='flex border-2 border-white gap-5 items-center px-6 py-2 bg-zinc-900 rounded-lg'>LOGOUT</button>
 
-        </nav>
-        <div className='flex justify-center'>
-            <button onClick={handleAddContactClick} className='flex border-2 border-white gap-5 items-center w-[50vw] py-2 bg-zinc-900 rounded-xl'>
-                <span className='mr-28 ml-8'><svg width="20" height="20" viewBox="0 0 100 100">
-                    <line x1="50" y1="10" x2="50" y2="90" stroke="white" strokeWidth="5" />
-                    <line x1="10" y1="50" x2="90" y2="50" stroke="white" strokeWidth="5" /></svg>
-                </span>
-                <span className='items-center pl-32 text-xl'>ADD CONTACT</span>
-            </button>
-            {isModalOpen &&
-                <Addcontact isOpen={isModalOpen} onClose={handleCloseModal} />}
-        </div>
-        <div className='flex justify-center mt-6'>
-            <div className='flex flex-col border-2 border-white gap-5 w-[50vw] py-2 bg-zinc-900 text-left p-4 max-h-80 overflow-y-scroll rounded-xl'>
-                <ul>
-                    {contacts.map((contact) => (
-                        <li className='text-xl p-1' key={contact.id} >
-                            <p className='cursor-pointer' style={{ textDecoration: 'none', color: 'inherit' }} onClick={() => handleContactDetailsClick(contact.id)}>{contact.name}</p>
-                        </li>
-                    ))}
-                </ul>
+    return (
+        <>
+            {/* Navigation */}
+            <nav className='w-full flex justify-between m-16'>
+                <span className='text-3xl font-extrabold'>PB</span>
+                <button onClick={() => Navigate("/")} className='flex border-2 border-white gap-5 items-center px-6 py-2 bg-zinc-900 rounded-lg'>LOGOUT</button>
+            </nav>
+
+            {/* Add contact button */}
+            <div className='flex justify-center'>
+                <button onClick={handleAddContactClick} className='flex border-2 border-white gap-5 items-center w-[50vw] py-2 bg-zinc-900 rounded-xl'>
+                    <span className='mr-28 ml-8'>
+                        <svg width="20" height="20" viewBox="0 0 100 100">
+                            <line x1="50" y1="10" x2="50" y2="90" stroke="white" strokeWidth="5" />
+                            <line x1="10" y1="50" x2="90" y2="50" stroke="white" strokeWidth="5" />
+                        </svg>
+                    </span>
+                    <span className='items-center pl-32 text-xl'>ADD CONTACT</span>
+                </button>
+                {/* Add contact modal */}
+                {isModalOpen && <Addcontact isOpen={isModalOpen} onClose={handleCloseModal} />}
             </div>
-        </div>
-        {selectedContactId && 
-            <ContactDetails isOpen={isContactModalOpen} onClose={handleCloseContactModal} contactId={selectedContactId} />
-        }
-    </>
 
+            {/* Contact list */}
+            <div className='flex justify-center mt-6'>
+                <div className='flex flex-col border-2 border-white gap-5 w-[50vw] py-2 bg-zinc-900 text-left p-4 max-h-80 overflow-y-scroll rounded-xl'>
+                    <ul>
+                        {contacts.map((contact) => (
+                            <li className='text-xl p-1' key={contact.id}>
+                                <p className='cursor-pointer' style={{ textDecoration: 'none', color: 'inherit' }} onClick={() => handleContactDetailsClick(contact.id)}>{contact.name}</p>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
 
-)
-}
+            {/* Contact details modal */}
+            {selectedContactId && <ContactDetails isOpen={isContactModalOpen} onClose={handleCloseContactModal} contactId={selectedContactId} />}
+        </>
+    );
+};
 
-export default Contactlist
+export default Contactlist;
